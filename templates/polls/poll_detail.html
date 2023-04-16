@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <br>
+        {% if user_has_voted == True %}
+            <h2>{{ poll.question }}</h2>
+
+            {% for option in options %}
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ option.option }}</h5>
+                        <p class="card-text"><b>Total Votes :</b>
+                            <span style="font-weight: bold;color: red">{{ option.votes }}</span></p>
+
+                        <p class="card-text"><b>Voted by :</b><span style="color: blue">
+                        {% for user in option.voted.all %} {{ user.voter }}, {% endfor %}</span></p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h2>{{ poll.question }}</h2>
+
+            <form method="post">
+                {% csrf_token %}
+                {% for option in poll.options.all %}
+                    <div class="form-check formcheckpadding">
+                        <input class="form-check-input" type="radio" name="option" id="{{ option.id }}"
+                               value="{{ option.id }}">
+                        <label class="form-check-label" for="{{ option.id }}">
+                            {{ option.option }}
+                        </label>
+                    </div>
+                {% endfor %}
+                <br>
+                <center>
+                    <button type="submit" class="btn btn-primary">Vote</button>
+                </center>
+
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

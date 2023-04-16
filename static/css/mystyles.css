@@ -1,0 +1,34 @@
+.bgfull {
+    background: lightpink;
+}
+
+.navbar-nav li {
+    padding: 0 10px;
+}
+
+.navbar-nav .nav-link.active {
+    background-color: #ccc;
+}
+
+.frmbtn {
+    margin: 10px;
+}
+
+.card {
+    margin: 2% !important;
+}
+
+a {
+    text-decoration: none !important;
+}
+.formcheckpadding{
+    padding: 10px !important;
+}
+.form-check-input[type=radio] {
+    border-radius: 50%;
+    font-size: 125% !important;
+}
+button.btn.btn-danger.delete-option-form {
+    width: 30px !important;
+    text-align: center !important;
+}

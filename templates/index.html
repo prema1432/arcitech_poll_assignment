@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <h1>Total Polls</h1>
+        <hr>
+        <div class="row">
+            {% if latest_polls %}
+                {% for poll in latest_polls %}
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <a href="{% url 'polls:poll_detail' poll.id %}">
+                                    <h5 class="card-title" style="text-justify: auto">{{ poll }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-body-secondary" style="float: right;color: red !important;">
+                                     <i>   Created By  : {{ poll.created_by }}</i>
+                                    </h6>
+                                    <p class="card-text">
+                                        {% for eachoption in poll.options.all %}
+                                            {{ eachoption }} <br>
+                                           {% endfor %}
+
+                                       </p>
+                                    <p style="float: right;color: black;">
+                                        <em>{{ poll.created_at }}</em></p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            {% else %}
+                <div class="text-center">
+                    <center>
+
+                        <lottie-player src="{% static 'lottie/norecordsfound.json' %}" background="transparent"
+                                       speed="1" style="width: 300px; height: 300px;" loop autoplay></lottie-player>
+                    </center>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
