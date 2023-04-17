@@ -19,6 +19,12 @@ class Poll(TimeStampedModel):
     def __str__(self):
         return self.question
 
+    def total_votes(self):
+        total = 0
+        for option in self.options.all():
+            total += option.votes
+        return total
+
 
 class PollOption(TimeStampedModel):
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE, related_name='options')
@@ -27,6 +33,15 @@ class PollOption(TimeStampedModel):
 
     def __str__(self):
         return self.option
+
+    @property
+    def get_voting_percentage(self):
+        total_votes = self.poll.total_votes()
+        if total_votes == 0:
+            return 0
+        voting_percentage = (self.votes / total_votes) * 100
+        return round(voting_percentage, 2)
+
 
 class Vote(TimeStampedModel):
     poll_option = models.ForeignKey(PollOption, on_delete=models.CASCADE, related_name='voted')
